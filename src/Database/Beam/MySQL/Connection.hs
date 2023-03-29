@@ -65,7 +65,7 @@ import           Database.Beam.MySQL.Syntax.Insert ( MySQLInsert(InsertStmt)
                                                     , MySQLInsertOnConflictAction(..)
                                                     , MySQLInsertOnConflictTarget(..) )
 import           Database.Beam.MySQL.Syntax.Update ( FieldUpdate(FieldUpdate) )
-import           Database.Beam.Query ( SqlInsert(..), SqlInsertValues(..)
+import           Database.Beam.Query ( SqlInsert(..), SqlInsertValues(..), HasSqlInTable(..)
                                      , HasQBuilder(..), HasSqlEqualityCheck
                                      , HasSqlQuantifiedEqualityCheck)
 import           Database.Beam.Query.SQL92 (buildSql92Query')
@@ -302,6 +302,9 @@ instance HasSqlEqualityCheck MySQL FakeUTC
 
 -- | @since 1.2.2.0
 instance HasSqlQuantifiedEqualityCheck MySQL FakeUTC
+
+-- | @since 1.3.0.x
+instance HasSqlInTable MySQL
 
 instance Beam.BeamHasInsertOnConflict MySQL where
   newtype SqlConflictTarget MySQL table = MySQLConflictTarget
