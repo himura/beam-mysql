@@ -11,7 +11,6 @@ import           Data.ViaJson (ViaJson (ViaJson))
 import           Data.Word (Word16, Word32, Word64, Word8)
 import           Database.Beam.Backend.SQL (HasSqlValueSyntax (sqlValueSyntax),
                                             SqlNull)
-import           Database.Beam.MySQL.TextHandling (encodeText)
 
 -- | Syntactic representation of a MySQL value. For convenience, these store
 -- Haskell values directly, rather than their syntactic representations.
@@ -221,13 +220,13 @@ instance HasSqlValueSyntax MySQLValueSyntax ByteString where
 instance HasSqlValueSyntax MySQLValueSyntax Text where
   {-# INLINABLE sqlValueSyntax #-}
   sqlValueSyntax :: Text -> MySQLValueSyntax
-  sqlValueSyntax = VText . encodeText
+  sqlValueSyntax = VText
 
 -- | @since 1.2.3.1
 instance HasSqlValueSyntax MySQLValueSyntax String where
   {-# INLINABLE sqlValueSyntax #-}
   sqlValueSyntax :: String -> MySQLValueSyntax
-  sqlValueSyntax = VText . encodeText . pack
+  sqlValueSyntax = VText . pack
 
 -- | @since 1.2.3.1
 instance HasSqlValueSyntax MySQLValueSyntax Day where

@@ -19,7 +19,6 @@ import           Data.Word (Word16, Word32, Word64, Word8)
 import           Database.Beam.Backend.SQL (SqlNull (SqlNull))
 import           Database.Beam.MySQL.FromField.DecodeError (DecodeError (DecodeError),
                                                             Strict (NotValidJSON, TypeMismatch, UnexpectedNull, Won'tFit))
-import           Database.Beam.MySQL.TextHandling (decodeText)
 import           Database.MySQL.Base (MySQLValue (..))
 import           Type.Reflection (TyCon, Typeable, typeRep, typeRepTyCon)
 
@@ -164,7 +163,7 @@ instance FromField ByteString where
 instance FromField Text where
   {-# INLINABLE fromField #-}
   fromField = \case
-    MySQLText v -> pure . decodeText $ v
+    MySQLText v -> pure v
     v           -> handleNullOrMismatch v
 
 instance FromField LocalTime where
@@ -194,7 +193,7 @@ instance FromField TimeOfDay where
 instance (Typeable a, FromJSON a) => FromField (ViaJson a) where
   {-# INLINABLE fromField #-}
   fromField = \case
-    MySQLText v -> case decodeStrict . encodeUtf8 . decodeText $ v of
+    MySQLText v -> case decodeStrict . encodeUtf8 $ v of
       Nothing -> Left . DecodeError NotValidJSON $ tyCon @a
       Just x  -> pure . ViaJson $ x
     v -> handleNullOrMismatch v

@@ -106,7 +106,6 @@ library
       Database.Beam.MySQL.Syntax.Select
       Database.Beam.MySQL.Syntax.Update
       Database.Beam.MySQL.Syntax.Value
-      Database.Beam.MySQL.TextHandling
       Database.Beam.MySQL.Utils
 
   else
@@ -128,7 +127,6 @@ library
       Database.Beam.MySQL.Syntax.Select
       Database.Beam.MySQL.Syntax.Update
       Database.Beam.MySQL.Syntax.Value
-      Database.Beam.MySQL.TextHandling
       Database.Beam.MySQL.Utils
 
   build-depends:
